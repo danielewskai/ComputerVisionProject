@@ -676,7 +676,7 @@ def render_metadata_summary(paths: ProjectPaths) -> None:
 def main():
     st.set_page_config(page_title="Voice Allow App", layout="wide")
     st.title("Voice Allow App")
-    st.caption("Notebook sluzy do treningu. Ta apka sluzy do testowania nagran i dodawania nowego allowed speakera do datasetu.")
+    st.caption("Testowa apka")
 
     with st.sidebar:
         work_dir_str = st.text_input("WORK_DIR", str(DEFAULT_WORK_DIR))
@@ -692,7 +692,7 @@ def main():
         else:
             st.warning("Nie znaleziono checkpointu .pt w work_dir/models")
 
-    tab1, tab2, tab3 = st.tabs(["Test nagrania", "Dodaj nowy allowed", "Stan projektu"])
+    tab1, tab2, tab3 = st.tabs(["Test nagrania", "Dodaj czlowieka", "Stan projektu"])
 
     with tab1:
         st.subheader("Test pojedynczego nagrania")
@@ -719,13 +719,13 @@ def main():
                 c3.metric("Threshold", f"{pred['threshold']:.4f}")
                 c4.metric("Segmenty", pred["n_segments"])
 
-                st.write("Prawdopodobienstwa na segmentach")
-                seg_df = pd.DataFrame({
-                    "segment_index": np.arange(len(pred["segment_probs_allow"])),
-                    "p_allow": pred["segment_probs_allow"],
-                })
-                st.dataframe(seg_df, use_container_width=True)
-                st.line_chart(seg_df.set_index("segment_index"))
+                # st.write("Prawdopodobienstwa na segmentach")
+                # seg_df = pd.DataFrame({
+                #     "segment_index": np.arange(len(pred["segment_probs_allow"])),
+                #     "p_allow": pred["segment_probs_allow"],
+                # })
+                # st.dataframe(seg_df, use_container_width=True)
+                # st.line_chart(seg_df.set_index("segment_index"))
 
                 decision_text = "ACCESS GRANTED" if pred["predicted_class_name"] == "allow" else "ACCESS DENIED"
                 if pred["predicted_class_name"] == "allow":
@@ -743,9 +743,8 @@ def main():
     with tab2:
         st.subheader("Dodanie nowego allowed speakera")
         st.warning(
-            "Ta operacja doda nowa osobe do datasetu i zaktualizuje metadata. "
-            "Zeby model rzeczywiscie zaczal ja dobrze rozpoznawac, potem trzeba jeszcze przetrenowac checkpoint w notebooku."
-        )
+            "Ta operacja doda nowa osobe do datasetu "
+            )
 
         speaker_name = st.text_input("Nazwa speakera", key="speaker_name")
         uploaded_speaker_wavs = st.file_uploader(
@@ -754,7 +753,7 @@ def main():
             accept_multiple_files=True,
             key="speaker_wavs",
         )
-        rebuild_now = st.checkbox("Od razu przebuduj segmenty i spektrogramy", value=True)
+        rebuild_now = st.checkbox("Przetrenuj", value=True)
 
         if st.button("Dodaj osobe do datasetu", disabled=(not speaker_name or not uploaded_speaker_wavs)):
             try:
