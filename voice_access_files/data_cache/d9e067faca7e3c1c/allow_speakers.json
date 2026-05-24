@@ -1,0 +1,14 @@
+{
+  "allow_speakers": [
+    "p225",
+    "p227",
+    "p228",
+    "p231",
+    "p232"
+  ],
+  "allow_speakers_with_valid_target": [
+    "p225",
+    "p232"
+  ],
+  "n_duplicates_removed": 0
+}

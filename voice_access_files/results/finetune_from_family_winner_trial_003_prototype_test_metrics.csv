@@ -1,0 +1,2 @@
+n_total,n_allow,n_not_allow,false_accept,false_reject,far,frr,acc,balanced_error,gap_far_frr
+220,98,122,0,9,0.0,0.09183673469387756,0.9590909090909091,0.04591836734693878,0.09183673469387756
