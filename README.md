@@ -14,3 +14,11 @@ The repository includes:
 - final model evaluation,
 - noise robustness experiments,
 - Streamlit application for access checking and speaker enrollment.
+
+
+## Running the Streamlit application
+
+The final application can be started from the terminal by running:
+
+~~~bash
+py -m streamlit run streamlit_voice_allow_app_final.py
